@@ -1,0 +1,4 @@
+Idea is to use 1 controller to pick up and move objects. You can also locomootre
+
+Android needs a different library
+Bluetooth wont workl
