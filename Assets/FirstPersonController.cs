@@ -3,9 +3,9 @@ using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
+using UnityStandardAssets.Characters.FirstPerson;
 
-namespace UnityStandardAssets.Characters.FirstPerson
-{
+
     [RequireComponent(typeof (CharacterController))]
     [RequireComponent(typeof (AudioSource))]
     public class FirstPersonController : MonoBehaviour
@@ -203,9 +203,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void GetInput(out float speed)
         {
+            Joycon j = JoyconManager.Instance.j[1];
+            float[] position = j.GetStick();
             // Read input
-            float horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
-            float vertical = CrossPlatformInputManager.GetAxis("Vertical");
+            float horizontal = position[0];
+            float vertical = position[1];
 
             bool waswalking = m_IsWalking;
 
@@ -236,7 +238,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void RotateView()
         {
-            m_MouseLook.LookRotation (transform, m_Camera.transform);
+            Joycon j = JoyconManager.Instance.j[0];
+            float[] rotation = j.GetStick();
+            m_Camera.transform.rotation = m_Camera.transform.rotation *
+                              Quaternion.Euler(0, rotation[0] * 3, 0);
+            //m_MouseLook.LookRotation (transform, m_Camera.transform);
         }
 
 
@@ -256,4 +262,3 @@ namespace UnityStandardAssets.Characters.FirstPerson
             body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
         }
     }
-}

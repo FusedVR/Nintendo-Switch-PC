@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour {
 
+    public int joyconID = 0;
+
     private Joycon j;
     Moveable currMove = null;
 
     void Start() {
-        j = JoyconManager.Instance.j[0];
+        j = JoyconManager.Instance.j[joyconID];
         if (j == null) {
             Destroy(gameObject);
         }
@@ -40,5 +42,7 @@ public class Controller : MonoBehaviour {
                 }
             }
         }
+        
+        float[] movement = j.GetStick();
     }
 }

@@ -65,6 +65,7 @@ public class JoyconDemo : MonoBehaviour {
 			}
 
             stick = j.GetStick();
+          
 
             // Gyro values: x, y, z axis values (in radians per second)
             gyro = j.GetGyro();
